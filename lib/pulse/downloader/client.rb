@@ -6,6 +6,7 @@ module Pulse
 
       attr_reader :path, :file_type, :save_data, :save_path, :read_from_save_path
 
+      # TODO: Readme and usage
       # TODO: Timing
       # TODO: Validation
       # TODO: Retry
