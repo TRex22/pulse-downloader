@@ -10,7 +10,6 @@ module Pulse
       # TODO: Timing
       # TODO: Validation
       # TODO: Retry
-      # TODO: Https skip certs
       # TODO: DNS
       def initialize(path:, file_type:, save_data: false, save_path: '', read_from_save_path: false, verify_ssl: true)
         @path = path

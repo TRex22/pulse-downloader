@@ -1,8 +1,6 @@
 # Pulse::Downloader
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/pulse/downloader`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This is a library to download a specific group of files linked to on an html page.
 
 ## Installation
 
@@ -22,7 +20,18 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'pulse/downloader'
+
+client = Pulse::Downloader::Client.new(
+  path: '',
+  file_type: 'zip',
+  save_data: true,
+  save_path: '',
+  read_from_save_path: false,
+  verify_ssl: true
+)
+```
 
 ## Development
 
@@ -33,7 +42,6 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/pulse-downloader. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/pulse-downloader/blob/master/CODE_OF_CONDUCT.md).
-
 
 ## License
 
