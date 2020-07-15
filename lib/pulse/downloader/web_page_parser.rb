@@ -18,7 +18,9 @@ module Pulse
       private
 
       def extract_file_urls(response)
-        parse_html(response)
+        return [] if response.body.nil? || response.body.empty?
+
+        parse_html(response.body)
           .css('a')
           .to_a
           .map { |link| link['href'] }

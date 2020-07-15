@@ -46,11 +46,11 @@ module Pulse
       private
 
       def get_micro_second_time
-        (Time.now.to_f * 1000000).to_i
+        (Time.now.to_f * 1000).to_i
       end
 
       def print_time
-        puts "#{end_time - start_time} ms."
+        puts "Request time: #{end_time - start_time} ms."
       end
     end
   end
