@@ -24,12 +24,13 @@ Or install it yourself as:
 require 'pulse/downloader'
 
 client = Pulse::Downloader::Client.new(
-  path: '',
+  url: '',
   file_type: 'zip',
   save_data: true,
   save_path: '',
   read_from_save_path: false,
-  verify_ssl: true
+  verify_ssl: true,
+  report_time: false
 )
 ```
 

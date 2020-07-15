@@ -4,20 +4,28 @@ module Pulse
       include ::Pulse::Downloader::WebPageParser
       include ::Pulse::Downloader::FileDownloader
 
-      attr_reader :path, :file_type, :save_data, :save_path, :read_from_save_path, :verify_ssl
+      attr_reader :url,
+        :file_type,
+        :save_data,
+        :save_path,
+        :read_from_save_path,
+        :verify_ssl,
+        :report_time,
+        :start_time,
+        :end_time
 
       # TODO: Readme and usage
-      # TODO: Timing
       # TODO: Validation
       # TODO: Retry
       # TODO: DNS
-      def initialize(path:, file_type:, save_data: false, save_path: '', read_from_save_path: false, verify_ssl: true)
-        @path = path
+      def initialize(url:, file_type:, save_data: false, save_path: '', read_from_save_path: false, verify_ssl: true, report_time: false)
+        @url = url
         @file_type = file_type
         @save_data = save_data
         @save_path = save_path
         @read_from_save_path = read_from_save_path
         @verify_ssl = verify_ssl
+        @report_time = report_time
       end
 
       def call!
@@ -44,6 +52,10 @@ module Pulse
 
       def compute_filename(file_path)
         file_path.scan(/[\/]\S+/).last
+      end
+
+      def print_time
+        puts "#{end_time - start_time} ms."
       end
     end
   end
