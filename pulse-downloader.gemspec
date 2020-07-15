@@ -6,17 +6,10 @@ Gem::Specification.new do |spec|
   spec.authors       = ["trex22"]
   spec.email         = ["contact@jasonchalom.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = "Client to download datasets from webpages."
+  spec.description   = "Client to download datasets from webpages."
+  spec.homepage      = "https://github.com/TRex22/pulse-downloader"
   spec.license       = "MIT"
-  spec.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
-
-  spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
-
-  spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
-  spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
@@ -26,4 +19,19 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+
+  spec.add_dependency "httparty", "~> 0.18"
+  spec.add_dependency "active_attr", "~> 0.15"
+  spec.add_dependency "nokogiri", "~> 1.10.9"
+
+  # Development dependancies
+  spec.add_development_dependency "bundler", "~> 2.1.4"
+  spec.add_development_dependency "rake", "~> 13.0"
+  spec.add_development_dependency "minitest", "~> 5.0"
+  spec.add_development_dependency "minitest-focus", "~> 1.1.2"
+  spec.add_development_dependency "minitest-reporters", "~> 1.4.2"
+  spec.add_development_dependency "timecop", "~> 0.9.1"
+  spec.add_development_dependency "mocha", "~> 1.11.2"
+  spec.add_development_dependency "pry", "~> 0.13"
+  spec.add_development_dependency "webmock", "~> 3.8.3"
 end
