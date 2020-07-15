@@ -14,7 +14,6 @@ module Pulse
         :start_time,
         :end_time
 
-      # TODO: Readme and usage
       # TODO: Validation
       # TODO: Retry
       # TODO: DNS
@@ -48,10 +47,6 @@ module Pulse
 
       def get_micro_second_time
         (Time.now.to_f * 1000000).to_i
-      end
-
-      def compute_filename(file_path)
-        file_path.scan(/[\/]\S+/).last
       end
 
       def print_time
