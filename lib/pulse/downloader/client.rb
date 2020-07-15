@@ -4,7 +4,7 @@ module Pulse
       include ::Pulse::Downloader::WebPageParser
       include ::Pulse::Downloader::FileDownloader
 
-      attr_reader :path, :file_type, :save_data, :save_path, :read_from_save_path
+      attr_reader :path, :file_type, :save_data, :save_path, :read_from_save_path, :verify_ssl
 
       # TODO: Readme and usage
       # TODO: Timing
@@ -12,12 +12,13 @@ module Pulse
       # TODO: Retry
       # TODO: Https skip certs
       # TODO: DNS
-      def initialize(path:, file_type:, save_data: false, save_path: '', read_from_save_path: false)
+      def initialize(path:, file_type:, save_data: false, save_path: '', read_from_save_path: false, verify_ssl: true)
         @path = path
         @file_type = file_type
         @save_data = save_data
         @save_path = save_path
         @read_from_save_path = read_from_save_path
+        @verify_ssl = verify_ssl
       end
 
       def call!

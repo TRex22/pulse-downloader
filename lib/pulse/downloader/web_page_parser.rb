@@ -4,7 +4,7 @@ module Pulse
       def fetch_file_paths
         start_time = get_micro_second_time
 
-        response = HTTParty.get(@path)
+        response = HTTParty.get(@path, verify: verify_ssl)
 
         # TODO: Use the time
         end_time = get_micro_second_time

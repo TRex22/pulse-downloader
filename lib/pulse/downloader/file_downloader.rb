@@ -1,13 +1,13 @@
 module Pulse
   module Downloader
     module FileDownloader
-      # save_path are defined in client.rb
+      # save_path and verify_ssl are defined in client.rb
       def download(file_path)
         raise "save_path is undefined" if save_data && save_path == ''
 
         start_time = get_micro_second_time
 
-        file_data = HTTParty.get(file_path)
+        file_data = HTTParty.get(file_path, verify: verify_ssl)
 
         # TODO: Use the time
         end_time = get_micro_second_time
