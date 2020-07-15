@@ -45,11 +45,31 @@ module Pulse
       end
 
       def compute_file_link(file_path)
-        if file_path[0] == '/'
+        if section?(file_path)
+          raise 'invalid download path'
+        elsif absolute?(file_path)
+          file_path
+        elsif relative?(file_path)
           "#{url}/#{file_path}"
         else
-          file_path
+          "#{url}/#{file_path}"
         end
+      end
+
+      def absolute?(file_path)
+        file_path.include?('http://') ||
+          file_path.include?('https://') ||
+          file_path.include?('ftp://') ||
+          file_path.include?('sftp://')||
+          file_path.include?('file://')
+      end
+
+      def relative?(file_path)
+        file_path[0] == '/'
+      end
+
+      def section?(file_path)
+        file_path[0] == '#'
       end
     end
   end
