@@ -15,6 +15,7 @@ module Pulse
         :end_time
 
       # TODO: Add in progress bar
+      # TODO: Save without returning in memory
       # TODO: Validation
       # TODO: Retry
       # TODO: DNS
