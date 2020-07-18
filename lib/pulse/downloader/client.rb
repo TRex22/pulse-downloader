@@ -20,7 +20,6 @@ module Pulse
       # Will only save once the file has been downloaded in memory
 
       # TODO: Add in progress bar
-      # TODO: Save without returning in memory
       # TODO: Validation
       # TODO: Retry
       # TODO: DNS
@@ -31,6 +30,7 @@ module Pulse
         read_from_save_path: false,
         verify_ssl: true,
         drop_exitsing_files_in_path: false,
+        save_and_dont_return: true,
         report_time: false)
 
         @url = url

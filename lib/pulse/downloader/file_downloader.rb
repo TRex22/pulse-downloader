@@ -20,6 +20,8 @@ module Pulse
           File.open(compute_save_path(file_path), 'wb') do |file|
             file.write(file_data.body)
           end
+
+          return true if save_and_dont_return
         end
 
         file_data
