@@ -12,6 +12,7 @@ module Pulse
         :read_from_save_path,
         :verify_ssl,
         :drop_exitsing_files_in_path,
+        :save_and_dont_return,
         :report_time,
         :start_time,
         :end_time
@@ -40,6 +41,7 @@ module Pulse
         @read_from_save_path = read_from_save_path
         @verify_ssl = verify_ssl
         @drop_exitsing_files_in_path = drop_exitsing_files_in_path
+        @save_and_dont_return = save_and_dont_return
         @report_time = report_time
       end
 
