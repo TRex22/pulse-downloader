@@ -4,6 +4,7 @@ module Pulse
       # save_path and verify_ssl are defined in client.rb
       def download(file_path)
         raise "save_path is undefined" if save_data && save_path == ''
+        return if file_path_in_file_list?(file_path) # skip downloading the file
 
         @start_time = get_micro_second_time
 
@@ -35,14 +36,6 @@ module Pulse
       end
 
       private
-
-      def compute_save_path(url)
-        "#{save_path}/#{compute_filename(url)}"
-      end
-
-      def compute_filename(file_path)
-        file_path.scan(/[\/]\S+/).last
-      end
 
       def compute_file_link(file_path)
         if section?(file_path)

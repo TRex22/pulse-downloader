@@ -3,6 +3,7 @@ require 'nokogiri'
 
 require "pulse/downloader/version"
 require 'pulse/downloader/web_page_parser'
+require 'pulse/downloader/file_checker'
 require 'pulse/downloader/file_downloader'
 require 'pulse/downloader/client'
 
