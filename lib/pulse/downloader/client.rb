@@ -26,6 +26,7 @@ module Pulse
       # TODO: Retry
       # TODO: DNS
       # TODO: Multiple filetypes
+      # TODO: lib/pulse/downloader/file_downloader.rb:13: warning: URI.escape is obsolete
       def initialize(url:,
         file_type:,
         save_data: false,
