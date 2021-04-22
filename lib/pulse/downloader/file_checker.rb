@@ -14,7 +14,7 @@ module Pulse
       end
 
       def compute_filename(file_path)
-        file_path.scan(/[\/]\S+/).last
+        file_path.scan(/[\/]\S+/).last.split('/').last
       end
 
       def list_files_in(path)
