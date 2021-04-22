@@ -1,6 +1,8 @@
 module Pulse
   module Downloader
     module FileDownloader
+      require 'uri'
+
       # save_path and verify_ssl are defined in client.rb
       def download(file_path, progress_bar=nil)
         raise "save_path is undefined" if save_data && save_path == ''
