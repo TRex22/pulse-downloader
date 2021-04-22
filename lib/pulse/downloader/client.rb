@@ -1,6 +1,7 @@
 module Pulse
   module Downloader
     class Client
+      require 'progress_bar'
       include ::Pulse::Downloader::WebPageParser
       include ::Pulse::Downloader::FileChecker
       include ::Pulse::Downloader::FileDownloader
@@ -44,10 +45,7 @@ module Pulse
         @drop_exitsing_files_in_path = drop_exitsing_files_in_path
         @save_and_dont_return = save_and_dont_return
         @report_time = report_time
-
-        if progress_bar
-          @progress_bar = ProgressBar.new
-        end
+        @progress_bar = progress_bar
       end
 
       def call!
@@ -58,7 +56,7 @@ module Pulse
         return false unless valid?
 
         if @progress_bar
-          @progress_bar = ProgressBar.new(fetch_file_paths.size)
+          @progress_bar = ::ProgressBar.new(fetch_file_paths.size)
         end
 
         fetch_file_paths.map do |file_path|
