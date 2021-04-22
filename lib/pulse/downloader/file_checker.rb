@@ -10,7 +10,7 @@ module Pulse
       private
 
       def compute_save_path(url)
-        "#{save_path}/#{compute_filename(url)}".gsub('//', '/')
+        "#{save_path}/#{compute_filename(url)}".gsub('//', '/').gsub(' ', '')
       end
 
       def compute_filename(file_path)
