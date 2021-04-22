@@ -34,6 +34,8 @@ client = Pulse::Downloader::Client.new(
   save_and_dont_return: true
   report_time: false
 )
+
+client.call!
 ```
 
 ## Development
