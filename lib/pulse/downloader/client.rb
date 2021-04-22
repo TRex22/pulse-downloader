@@ -25,6 +25,7 @@ module Pulse
       # TODO: Validation
       # TODO: Retry
       # TODO: DNS
+      # TODO: Multiple filetypes
       def initialize(url:,
         file_type:,
         save_data: false,
