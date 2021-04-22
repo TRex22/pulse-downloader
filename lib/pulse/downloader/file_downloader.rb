@@ -2,7 +2,7 @@ module Pulse
   module Downloader
     module FileDownloader
       # save_path and verify_ssl are defined in client.rb
-      def download(file_path)
+      def download(file_path, progress_bar=nil)
         raise "save_path is undefined" if save_data && save_path == ''
         return if file_path_in_file_list?(file_path) # skip downloading the file
 
@@ -13,7 +13,7 @@ module Pulse
         @end_time = get_micro_second_time
 
         if report_time
-          print_time
+          print_time(progress_bar)
         end
 
         if save_data

@@ -31,8 +31,9 @@ client = Pulse::Downloader::Client.new(
   read_from_save_path: false,
   verify_ssl: true,
   drop_exitsing_files_in_path: false,
-  save_and_dont_return: true
-  report_time: false
+  save_and_dont_return: true,
+  report_time: false,
+  progress_bar: true
 )
 
 client.call!

@@ -15,12 +15,12 @@ module Pulse
         :save_and_dont_return,
         :report_time,
         :start_time,
-        :end_time
+        :end_time,
+        :progress_bar
 
       # Does not continue downloads-
       # Will only save once the file has been downloaded in memory
 
-      # TODO: Add in progress bar
       # TODO: Validation
       # TODO: Retry
       # TODO: DNS
@@ -32,7 +32,8 @@ module Pulse
         verify_ssl: true,
         drop_exitsing_files_in_path: false,
         save_and_dont_return: true,
-        report_time: false)
+        report_time: false,
+        progress_bar: false)
 
         @url = url
         @file_type = file_type
@@ -43,6 +44,10 @@ module Pulse
         @drop_exitsing_files_in_path = drop_exitsing_files_in_path
         @save_and_dont_return = save_and_dont_return
         @report_time = report_time
+
+        if progress_bar
+          @progress_bar = ProgressBar.new
+        end
       end
 
       def call!
@@ -52,8 +57,13 @@ module Pulse
       def call
         return false unless valid?
 
+        if @progress_bar
+          @progress_bar = ProgressBar.new(fetch_file_paths.size)
+        end
+
         fetch_file_paths.map do |file_path|
-          download(file_path)
+          download(file_path, @progress_bar)
+          @progress_bar.increment!
         end
       end
 
@@ -67,8 +77,14 @@ module Pulse
         (Time.now.to_f * 1000).to_i
       end
 
-      def print_time
-        puts "Request time: #{end_time - start_time} ms."
+      def print_time(progress_bar=nil)
+        output = "Request time: #{end_time - start_time} ms."
+
+        if progress_bar
+          progress_bar.puts output
+        else
+          puts output
+        end
       end
     end
   end
