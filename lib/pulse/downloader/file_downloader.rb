@@ -1,8 +1,6 @@
 module Pulse
   module Downloader
     module FileDownloader
-      require 'uri'
-
       # save_path and verify_ssl are defined in client.rb
       def download(file_path, progress_bar=nil)
         raise "save_path is undefined" if save_data && save_path == ''
@@ -10,7 +8,7 @@ module Pulse
 
         @start_time = get_micro_second_time
 
-        file_data = HTTParty.get(URI.escape(compute_file_link(file_path)), verify: verify_ssl)
+        file_data = HTTParty.get(escape(compute_file_link(file_path)), verify: verify_ssl)
 
         @end_time = get_micro_second_time
 
@@ -67,6 +65,37 @@ module Pulse
 
       def section?(file_path)
         file_path[0] == '#'
+      end
+
+      def escape(str)
+        str.gsub("Space", "%20")
+        str.gsub("$", "\%24")
+        str.gsub("&", "\%26")
+        str.gsub("`", "\%60")
+        str.gsub(":", "\%3A")
+        str.gsub("<", "\%3C")
+        str.gsub(">", "\%3E")
+        str.gsub("[", "\%5B")
+        str.gsub("]", "\%5D")
+        str.gsub("{", "\%7B")
+        str.gsub("}", "\%7D")
+        str.gsub("“", "\%22")
+        str.gsub('"', "\%22")
+        str.gsub("+", "\%2B")
+        str.gsub("#", "\%23")
+        str.gsub("\%", "\%25")
+        str.gsub("@", "\%40")
+        str.gsub("/", "\%2F")
+        str.gsub(";", "\%3B")
+        str.gsub("=", "\%3D")
+        str.gsub("?", "\%3F")
+        str.gsub("\\", "\%5C")
+        str.gsub("^", "\%5E")
+        str.gsub("|", "\%7C")
+        str.gsub("~", "\%7E")
+        str.gsub("‘", "\%27")
+        str.gsub(",", "\%2C")
+        str
       end
     end
   end
