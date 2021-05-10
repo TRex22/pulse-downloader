@@ -49,13 +49,7 @@ module Pulse
       end
 
       def add_base_url(str)
-        url_breakdown = url.split('/')
-
-        if url_breakdown.first.include?('https')
-          url_breakdown.third
-        else
-          url_breakdown.first
-        end
+        "#{base_url}#{str}"
       end
     end
   end

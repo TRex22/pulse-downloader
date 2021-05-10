@@ -18,7 +18,8 @@ module Pulse
         :report_time,
         :start_time,
         :end_time,
-        :progress_bar
+        :progress_bar,
+        :base_url
 
       # Does not continue downloads-
       # Will only save once the file has been downloaded in memory
@@ -51,6 +52,8 @@ module Pulse
         @save_and_dont_return = save_and_dont_return
         @report_time = report_time
         @progress_bar = progress_bar
+
+        @base_url = get_base_url
       end
 
       def call!
@@ -75,6 +78,16 @@ module Pulse
       end
 
       private
+
+      def get_base_url
+        url_breakdown = url.split('/')
+
+        if url_breakdown.first.include?('https')
+          url_breakdown[2]
+        else
+          url_breakdown.first
+        end
+      end
 
       def get_micro_second_time
         (Time.now.to_f * 1000).to_i
