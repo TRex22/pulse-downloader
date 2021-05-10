@@ -19,7 +19,9 @@ module Pulse
 
       def extract_file_urls(response)
         return [] if response.body.nil? || response.body.empty?
-        extract_download_links(response) + extract_embedded_images(response)
+        (
+          extract_download_links(response) + extract_embedded_images(response)
+        ).uniq
       end
 
       def extract_download_links(response)
@@ -50,7 +52,7 @@ module Pulse
 
       def add_base_url(str)
         unless str.include?(base_url)
-          "#{base_url}#{str}"
+          "https://#{base_url}#{str}"
         else
           str
         end
