@@ -51,6 +51,8 @@ module Pulse
       end
 
       def add_base_url(str)
+        unless str.include?('https://')
+          str
         unless str.include?(base_url)
           "https://#{base_url}#{str}"
         else
