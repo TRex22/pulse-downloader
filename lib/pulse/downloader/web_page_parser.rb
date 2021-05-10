@@ -29,20 +29,33 @@ module Pulse
           .map { |link| link['href'] }
           .compact
           .select { |link| link.include? file_type }
+          .map { |link| add_base_url(link) }
       end
 
       def extract_embedded_images(response)
+        return [] unless scrape_images
+
         parse_html(response.body)
           .css('img')
           .to_a
           .map { |e| e["src"] }
           .compact
           .select { |link| link.include? file_type }
-          .select { |link| link.include? "https://" }
+          .map { |link| add_base_url(link) }
       end
 
       def parse_html(raw_html)
         Nokogiri::HTML(raw_html)
+      end
+
+      def add_base_url(str)
+        url_breakdown = url.split('/')
+
+        if url_breakdown.first.include?('https')
+          url_breakdown.third
+        else
+          url_breakdown.first
+        end
       end
     end
   end
