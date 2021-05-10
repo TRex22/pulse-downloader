@@ -49,7 +49,11 @@ module Pulse
       end
 
       def add_base_url(str)
-        "#{base_url}#{str}"
+        unless str.include?(base_url)
+          "#{base_url}#{str}"
+        else
+          str
+        end
       end
     end
   end
