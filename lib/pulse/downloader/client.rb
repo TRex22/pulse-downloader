@@ -8,6 +8,7 @@ module Pulse
 
       attr_reader :url,
         :file_type,
+        :scrape_images,
         :save_data,
         :save_path,
         :read_from_save_path,
@@ -29,6 +30,7 @@ module Pulse
       # TODO: lib/pulse/downloader/file_downloader.rb:13: warning: URI.escape is obsolete
       def initialize(url:,
         file_type:,
+        scrape_images: false,
         save_data: false,
         save_path: '',
         read_from_save_path: false,
@@ -40,6 +42,7 @@ module Pulse
 
         @url = url
         @file_type = file_type
+        @scrape_images = scrape_images
         @save_data = save_data
         @save_path = save_path
         @read_from_save_path = read_from_save_path
