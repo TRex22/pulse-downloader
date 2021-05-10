@@ -26,9 +26,20 @@ module Pulse
       def extract_file_urls(response, custom_path_root, type)
         return [] if response.body.nil? || response.body.empty?
         (
-          extract_download_links(response, custom_path_root, type) +
+          extract_all_urls(response, custom_path_root, type) +
+            extract_download_links(response, custom_path_root, type) +
             extract_embedded_images(response, custom_path_root, type)
         ).uniq
+      end
+
+      def extract_all_urls(response, custom_path_root, type)
+        parse_html(response.body)
+          .to_s
+          .split(/\s+/)
+          .find_all { |u| u =~ /^https?:/ }
+          .compact
+          .select { |link| (link.include? type || link.include?(custom_path_root)) }
+          .map { |link| add_base_url(link) }
       end
 
       def extract_download_links(response, custom_path_root, type)
