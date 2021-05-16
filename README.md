@@ -33,7 +33,8 @@ client = Pulse::Downloader::Client.new(
   drop_exitsing_files_in_path: false,
   save_and_dont_return: true,
   report_time: false,
-  progress_bar: true
+  progress_bar: true,
+  scrape_images: true
 )
 
 client.call!

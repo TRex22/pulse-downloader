@@ -25,7 +25,7 @@ module Pulse
 
       def extract_file_urls(response, custom_path_root, type)
         return [] if response.body.nil? || response.body.empty?
-        (
+        remove_base64(
           extract_all_urls(response, custom_path_root, type) +
             extract_download_links(response, custom_path_root, type) +
             extract_embedded_images(response, custom_path_root, type)
@@ -62,6 +62,12 @@ module Pulse
           .compact
           .select { |link| (link.include? type || link.include?(custom_path_root)) }
           .map { |link| add_base_url(link) }
+      end
+
+      def remove_base64(urls)
+        urls.reject do |url|
+          url.include?(':image/') || url.include?('base64')
+        end
       end
 
       def parse_html(raw_html)
