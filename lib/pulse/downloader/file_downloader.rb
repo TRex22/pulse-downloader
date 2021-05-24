@@ -10,8 +10,7 @@ module Pulse
 
         file_data = HTTParty.get(
           escape(compute_file_link(file_path)),
-          verify: verify_ssl,
-          headers: headers
+          verify: verify_ssl
         )
 
         @end_time = get_micro_second_time

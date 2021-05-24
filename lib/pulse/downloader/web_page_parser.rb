@@ -4,7 +4,7 @@ module Pulse
       def fetch_file_paths(custom_path_root=nil)
         @start_time = get_micro_second_time
 
-        response = HTTParty.get(url, verify: verify_ssl)
+        response = HTTParty.get(url, verify: verify_ssl, headers: headers)
 
         @end_time = get_micro_second_time
 
@@ -25,10 +25,11 @@ module Pulse
 
       def extract_file_urls(response, custom_path_root, type)
         return [] if response.body.nil? || response.body.empty?
+
         remove_base64(
           extract_all_urls(response, custom_path_root, type) +
-            extract_download_links(response, custom_path_root, type) +
-            extract_embedded_images(response, custom_path_root, type)
+            extract_download_links(response, type) +
+            extract_embedded_images(response, type)
         ).uniq
       end
 
@@ -42,17 +43,17 @@ module Pulse
           .map { |link| add_base_url(link) }
       end
 
-      def extract_download_links(response, custom_path_root, type)
+      def extract_download_links(response, type)
         parse_html(response.body)
           .css('a')
           .to_a
           .map { |link| link['href'] }
           .compact
-          .select { |link| (link.include? type || link.include?(custom_path_root)) }
+          .select { |link| (link.include? type) }
           .map { |link| add_base_url(link) }
       end
 
-      def extract_embedded_images(response, custom_path_root, type)
+      def extract_embedded_images(response, type)
         return [] unless scrape_images
 
         parse_html(response.body)
@@ -60,7 +61,7 @@ module Pulse
           .to_a
           .map { |e| e["src"] }
           .compact
-          .select { |link| (link.include? type || link.include?(custom_path_root)) }
+          .select { |link| (link.include? type) }
           .map { |link| add_base_url(link) }
       end
 
