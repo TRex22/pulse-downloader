@@ -13,6 +13,7 @@ module Pulse
         :save_path,
         :read_from_save_path,
         :verify_ssl,
+        :headers,
         :drop_exitsing_files_in_path,
         :save_and_dont_return,
         :report_time,
@@ -36,6 +37,7 @@ module Pulse
         save_path: '',
         read_from_save_path: false,
         verify_ssl: true,
+        headers: nil,
         drop_exitsing_files_in_path: false,
         save_and_dont_return: true,
         report_time: false,
@@ -48,6 +50,7 @@ module Pulse
         @save_path = save_path
         @read_from_save_path = read_from_save_path
         @verify_ssl = verify_ssl
+        @headers = headers
         @drop_exitsing_files_in_path = drop_exitsing_files_in_path
         @save_and_dont_return = save_and_dont_return
         @report_time = report_time

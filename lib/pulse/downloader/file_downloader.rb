@@ -8,7 +8,11 @@ module Pulse
 
         @start_time = get_micro_second_time
 
-        file_data = HTTParty.get(escape(compute_file_link(file_path)), verify: verify_ssl)
+        file_data = HTTParty.get(
+          escape(compute_file_link(file_path)),
+          verify: verify_ssl,
+          headers: headers
+        )
 
         @end_time = get_micro_second_time
 
