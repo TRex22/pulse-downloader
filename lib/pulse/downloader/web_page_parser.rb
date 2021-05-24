@@ -26,7 +26,7 @@ module Pulse
       def extract_file_urls(response, custom_path_root, type)
         return [] if response.body.nil? || response.body.empty?
 
-        remove_base64(
+        remove_artefacts(
           extract_all_urls(response, custom_path_root, type) +
             extract_download_links(response, type) +
             extract_embedded_images(response, type)
