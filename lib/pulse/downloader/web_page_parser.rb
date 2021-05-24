@@ -40,7 +40,7 @@ module Pulse
           .find_all { |u| u =~ /^https?:/ }
           .compact
           .select { |link| (link.include? type || link.include?(custom_path_root)) }
-          .map { |link| add_base_url(link) }
+          .map { |link| add_base_url(link, custom_path_root) }
       end
 
       def extract_download_links(response, type)
@@ -65,6 +65,17 @@ module Pulse
           .map { |link| add_base_url(link) }
       end
 
+      def remove_artefacts(urls)
+        urls = remove_extra_escape_characters(urls)
+        remove_base64(urls)
+      end
+
+      def remove_extra_escape_characters(urls)
+        urls.map do |url|
+          url.gsub("\">", '')
+        end
+      end
+
       def remove_base64(urls)
         urls.reject do |url|
           url.include?(':image/') || url.include?('base64')
@@ -75,7 +86,9 @@ module Pulse
         Nokogiri::HTML(raw_html)
       end
 
-      def add_base_url(str)
+      def add_base_url(str, custom_path_root=nil)
+        return str if custom_path_root
+
         if !str.include?('https://') && !str.include?(base_url)
           "https://#{base_url}#{str}"
         else
