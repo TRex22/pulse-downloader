@@ -20,7 +20,7 @@ module Pulse
         @folder_urls = folder_urls.union(current_paths).uniq.compact
 
         current_paths.each do |path|
-          fetch_folders(path, custom_path_root)
+          fetch_folders(path, path)
         end
 
         folder_urls
