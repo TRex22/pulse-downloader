@@ -13,7 +13,7 @@ module Pulse
 
       private
 
-      def fetch_folders(base_url)
+      def fetch_folders(folder_url)
         current_paths = extract_hrefs(get_response(folder_url), custom_path_root)
         return unless current_paths.compact.size > 0
 
