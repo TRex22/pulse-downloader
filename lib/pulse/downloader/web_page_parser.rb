@@ -3,7 +3,7 @@ module Pulse
     module WebPageParser
       def fetch_file_paths(custom_path_root=nil)
         if traverse_folders
-          fetch_folders(url).each do |folder_url|
+          fetch_folders(url, custom_path_root).each do |folder_url|
             fetch_and_parse_response(folder_url, custom_path_root)
           end
         else
@@ -13,14 +13,14 @@ module Pulse
 
       private
 
-      def fetch_folders(folder_url)
+      def fetch_folders(folder_url, custom_path_root)
         current_paths = extract_hrefs(get_response(folder_url), custom_path_root)
         return unless current_paths.compact.size > 0
 
         @folder_urls = folder_urls.union(current_paths).uniq.compact
 
         current_paths.each do |path|
-          fetch_folders(path)
+          fetch_folders(path, custom_path_root)
         end
 
         folder_urls
