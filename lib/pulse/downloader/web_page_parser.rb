@@ -3,7 +3,7 @@ module Pulse
     module WebPageParser
       def fetch_file_paths(custom_path_root=nil)
         if traverse_folders
-          fetch_folders(url, custom_path_root).each do |folder_url|
+          fetch_folders(url, custom_path_root, nil).each do |folder_url|
             fetch_and_parse_response(folder_url, custom_path_root)
           end
         else
