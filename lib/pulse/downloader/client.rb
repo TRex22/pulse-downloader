@@ -20,7 +20,8 @@ module Pulse
         :start_time,
         :end_time,
         :progress_bar,
-        :base_url
+        :base_url,
+        :file_paths
 
       # Does not continue downloads-
       # Will only save once the file has been downloaded in memory
@@ -66,11 +67,13 @@ module Pulse
       def call
         return false unless valid?
 
+        @file_paths = fetch_file_paths
+
         if @progress_bar
-          @progress_bar = ::ProgressBar.new(fetch_file_paths.size)
+          @progress_bar = ::ProgressBar.new(file_paths.size)
         end
 
-        fetch_file_paths.map do |file_path|
+        file_paths.map do |file_path|
           download(file_path, @progress_bar) if save_data
           @progress_bar.increment!
         end
