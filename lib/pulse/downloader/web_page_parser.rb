@@ -13,13 +13,13 @@ module Pulse
 
       private
 
-      def fetch_folders(folder_url, custom_path_root)
-        current_paths = extract_hrefs(get_response(folder_url), custom_path_root)
+      def fetch_folders(folder_url, custom_path_root, inner_string)
+        current_paths = extract_hrefs(get_response(folder_url), custom_path_root, inner_string)
 
         @folder_urls = folder_urls.union(current_paths).uniq.compact
 
         current_paths.each do |path|
-          fetch_folders(path, nil)
+          fetch_folders(path, nil, inner_string)
         end
 
         folder_urls
@@ -63,13 +63,19 @@ module Pulse
         ).uniq
       end
 
-      def extract_hrefs(response, custom_path_root)
+      def extract_hrefs(response, custom_path_root, inner_string)
         parse_html(response.body)
           .css('a')
           .map { |link| "/#{link['href']}" }
           .reject { |link| link == "../" || link == "/../" }
           .reject { |link| link.include?('.') } # Remove files
+          .map { |link| append_two_paths(inner_string, link) }
           .map { |link| add_base_url(link, custom_path_root) }
+      end
+
+      def append_two_paths(inner_string, link)
+        return link if inner_string.nil?
+        "#{inner_string}/#{link}"
       end
 
       def extract_all_urls(response, custom_path_root, type)
