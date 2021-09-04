@@ -71,7 +71,7 @@ module Pulse
         end
 
         fetch_file_paths.map do |file_path|
-          download(file_path, @progress_bar)
+          download(file_path, @progress_bar) if save_data
           @progress_bar.increment!
         end
       end
