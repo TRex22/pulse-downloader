@@ -1,5 +1,5 @@
 module Pulse
   module Downloader
-    VERSION = "0.1.33"
+    VERSION = "0.1.35"
   end
 end

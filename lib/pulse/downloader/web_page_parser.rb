@@ -2,9 +2,38 @@ module Pulse
   module Downloader
     module WebPageParser
       def fetch_file_paths(custom_path_root=nil)
+        if traverse_folders
+          fetch_folders(url).each do |folder_url|
+            fetch_and_parse_response(folder_url, custom_path_root)
+          end
+        else
+          fetch_and_parse_response(url, custom_path_root)
+        end
+      end
+
+      private
+
+      def fetch_folders(base_url)
+        current_paths = extract_hrefs(get_response(folder_url), custom_path_root)
+        return unless current_paths.compact.size > 0
+
+        @folder_urls = folder_urls.union(current_paths).uniq.compact
+
+        current_paths.each do |path|
+          fetch_folders(path)
+        end
+
+        folder_urls
+      end
+
+      def fetch_and_parse_response(folder_url, custom_path_root)
+        parse_response(get_response(folder_url), custom_path_root, file_type)
+      end
+
+      def get_response(folder_url)
         @start_time = get_micro_second_time
 
-        response = HTTParty.get(url, verify: verify_ssl, headers: headers)
+        response = HTTParty.get(folder_url, verify: verify_ssl, headers: headers)
 
         @end_time = get_micro_second_time
 
@@ -12,6 +41,10 @@ module Pulse
           print_time
         end
 
+        response
+      end
+
+      def parse_response(response, custom_path_root, file_type)
         if file_type.is_a?(Array)
           file_type.flat_map do |type|
             extract_file_urls(response, custom_path_root, type)
@@ -21,8 +54,6 @@ module Pulse
         end
       end
 
-      private
-
       def extract_file_urls(response, custom_path_root, type)
         return [] if response.body.nil? || response.body.empty?
 
@@ -31,6 +62,14 @@ module Pulse
             extract_download_links(response, type) +
             extract_embedded_images(response, type)
         ).uniq
+      end
+
+      def extract_hrefs(response, custom_path_root)
+        parse_html(response.body)
+          .css('a')
+          .map { |link| link['href'] }
+          .reject { |link| link == "../" }
+          .map { |link| add_base_url(link, custom_path_root) }
       end
 
       def extract_all_urls(response, custom_path_root, type)

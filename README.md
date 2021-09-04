@@ -29,6 +29,7 @@ client = Pulse::Downloader::Client.new(
   save_data: true,
   save_path: '',
   read_from_save_path: false,
+  traverse_folders: false,
   verify_ssl: true,
   drop_exitsing_files_in_path: false,
   save_and_dont_return: true,
@@ -38,6 +39,8 @@ client = Pulse::Downloader::Client.new(
 )
 
 client.call!
+
+client.file_paths # Will give you the list of file paths
 ```
 
 ## Development

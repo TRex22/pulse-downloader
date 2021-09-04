@@ -12,6 +12,7 @@ module Pulse
         :save_data,
         :save_path,
         :read_from_save_path,
+        :traverse_folders,
         :verify_ssl,
         :headers,
         :drop_exitsing_files_in_path,
@@ -21,7 +22,8 @@ module Pulse
         :end_time,
         :progress_bar,
         :base_url,
-        :file_paths
+        :file_paths,
+        :folder_urls
 
       # Does not continue downloads-
       # Will only save once the file has been downloaded in memory
@@ -29,7 +31,6 @@ module Pulse
       # TODO: Validation
       # TODO: Retry
       # TODO: DNS
-      # TODO: Multiple filetypes
       # TODO: lib/pulse/downloader/file_downloader.rb:13: warning: URI.escape is obsolete
       def initialize(url:,
         file_type:,
@@ -37,6 +38,7 @@ module Pulse
         save_data: false,
         save_path: '',
         read_from_save_path: false,
+        traverse_folders: false,
         verify_ssl: true,
         headers: nil,
         drop_exitsing_files_in_path: false,
@@ -50,6 +52,7 @@ module Pulse
         @save_data = save_data
         @save_path = save_path
         @read_from_save_path = read_from_save_path
+        @traverse_folders = traverse_folders
         @verify_ssl = verify_ssl
         @headers = headers
         @drop_exitsing_files_in_path = drop_exitsing_files_in_path
@@ -58,6 +61,7 @@ module Pulse
         @progress_bar = progress_bar
 
         @base_url = get_base_url
+        @folder_urls = []
       end
 
       def call!
