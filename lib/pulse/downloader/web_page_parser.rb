@@ -69,6 +69,7 @@ module Pulse
           .css('a')
           .map { |link| "/#{link['href']}" }
           .reject { |link| link == "../" || link == "/../" }
+          .reject { |link| link.include?('.') } # Remove files
           .map { |link| add_base_url(link, custom_path_root) }
       end
 
