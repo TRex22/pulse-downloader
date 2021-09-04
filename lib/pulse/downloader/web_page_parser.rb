@@ -67,8 +67,8 @@ module Pulse
       def extract_hrefs(response, custom_path_root)
         parse_html(response.body)
           .css('a')
-          .map { |link| link['href'] }
-          .reject { |link| link == "../" }
+          .map { |link| "/#{link['href']}" }
+          .reject { |link| link == "../" || link == "/../" }
           .map { |link| add_base_url(link, custom_path_root) }
       end
 
